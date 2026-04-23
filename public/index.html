@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>FaceScan Pro — Yuz Tanish Tizimi</title>
+  <meta name="description" content="Kamera orqali yuz skanerlash va ro'yxatdan o'tish tizimi. Premium biometrik identifikatsiya."/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════ TOAST CONTAINER ═══════════════ -->
+<div id="toast-container"></div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header id="header">
+  <div class="header-logo">
+    <div class="logo-icon">🔬</div>
+    <span>FaceScan <span class="gradient-text">Pro</span></span>
+  </div>
+  <nav class="header-nav">
+    <button class="nav-link active" data-section="home" onclick="showSection('home')">Bosh sahifa</button>
+    <button class="nav-link" data-section="scan" onclick="showSection('scan')">Skaner</button>
+    <button class="nav-link" data-section="admin" onclick="showSection('admin');loadAdminData()">Admin</button>
+    <span style="display:flex;align-items:center;gap:6px;font-size:0.82rem;color:#64748b;margin-left:8px">
+      <span class="status-dot" id="serverDot"></span>
+      <span id="serverStatus">Tekshirilmoqda...</span>
+    </span>
+  </nav>
+</header>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<main id="home" class="section active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div style="position:relative;z-index:2">
+      <div class="hero-badge">
+        <span>✨</span> AI-powered biometrik tizim
+      </div>
+      <h1 class="hero-title">
+        <span class="gradient-text">Yuzingiz</span> —<br/>sizning pasportingiz
+      </h1>
+      <p class="hero-subtitle">
+        Kamera orqali bir soniyada skanerlaning. Tizim sizni avtomatik aniqlab, ma'lumotlaringizni saqlaydi.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" onclick="showSection('scan')">
+          <span>📷</span> Yuzni skanerlash
+        </button>
+        <button class="btn btn-secondary btn-lg" onclick="showSection('admin');loadAdminData()">
+          <span>📊</span> Admin panel
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-container">
+      <div class="glass-card stat-card">
+        <div class="stat-icon">👥</div>
+        <span class="stat-number" id="statUsers">—</span>
+        <div class="stat-label">Ro'yxatdagi foydalanuvchilar</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon">📸</div>
+        <span class="stat-number" id="statScans">—</span>
+        <div class="stat-label">Jami skanlar</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon">🗂️</div>
+        <span class="stat-number" id="statWorldRecords">—</span>
+        <div class="stat-label">World.json yozuvlari</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-icon">🟢</div>
+        <span class="stat-number" id="statToday">—</span>
+        <div class="stat-label">Bugun yangi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-header">
+      <h2 class="section-title">Nima uchun <span class="gradient-text">FaceScan Pro?</span></h2>
+      <p class="section-subtitle">Eng zamonaviy yuz tanish texnologiyasi bilan qurilgan.</p>
+    </div>
+    <div class="features-grid">
+      <div class="glass-card feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Tez va aniq</h3>
+        <p class="feature-desc">128-o'lchamli yuz embedding orqali 0.5 soniyada skanerlash va yuqori aniqlikda taqqoslash.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">Xavfsiz saqlash</h3>
+        <p class="feature-desc">Ma'lumotlar PostgreSQL bazasida shifrlangan holda saqlanadi. World.json loglash ham mavjud.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3 class="feature-title">AI Detection</h3>
+        <p class="feature-desc">Face-api.js kutubxonasi orqali real vaqtda yuz aniqlash va landmark detection.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">📱</div>
+        <h3 class="feature-title">Har qurilmada</h3>
+        <p class="feature-desc">Mobil, tablet va desktop uchun to'liq responsiv dizayn. Kamera istalgan qurilmada ishlaydi.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">🗄️</div>
+        <h3 class="feature-title">PostgreSQL DB</h3>
+        <p class="feature-desc">Professional ma'lumotlar bazasi bilan CRUD operatsiyalar, indexlar va scan loglar.</p>
+      </div>
+      <div class="glass-card feature-card">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Admin Panel</h3>
+        <p class="feature-desc">Real-time statistika, foydalanuvchilar ro'yxati, scan loglari va world.json ko'rish.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DB STATUS -->
+  <section id="db-status">
+    <div class="glass-card db-status-bar">
+      <div class="db-info">
+        <div class="db-icon">🗄️</div>
+        <div class="db-text">
+          <strong>Ma'lumotlar bazasi holati</strong>
+          <span id="dbStatusText">Tekshirilmoqda...</span>
+        </div>
+      </div>
+      <div class="db-actions">
+        <button class="btn btn-secondary btn-sm" onclick="checkHealth()">🔄 Yangilash</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadWorldLog()">📄 World log</button>
+      </div>
+    </div>
+    <div class="glass-card world-log" id="worldLogCard" style="display:none">
+      <div class="world-log-title">📄 Oxirgi skanlar (world.json)</div>
+      <div class="world-log-list" id="worldLogList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════ SCAN PAGE ═══════════════ -->
+<section id="scan" class="section" style="padding-top:80px">
+  <div class="scan-container">
+    <div class="section-header">
+      <h2 class="section-title">Yuzni <span class="gradient-text">Skanerlash</span></h2>
+      <p class="section-subtitle">Kamerani yuzingizga qarating va "Skaner" tugmasini bosing</p>
+    </div>
+
+    <!-- Camera box -->
+    <div class="camera-wrapper" id="cameraWrapper">
+      <video id="videoElement" autoplay muted playsinline></video>
+      <canvas id="canvas"></canvas>
+
+      <!-- Scan frame overlay (shown during scanning) -->
+      <div class="scan-overlay" id="scanOverlay" style="display:none">
+        <div class="scan-frame">
+          <div class="scan-corner-br"></div>
+          <div class="scan-corner-bl"></div>
+          <div class="scan-line"></div>
+        </div>
+      </div>
+
+      <!-- Camera status bar -->
+      <div class="camera-status" id="cameraStatus">
+        <span class="status-dot" style="background:#475569"></span>
+        <span id="cameraStatusText">Kamera o'chiq</span>
+      </div>
+    </div>
+
+    <!-- Scan controls -->
+    <div class="scan-controls">
+      <button class="btn btn-secondary btn-lg" id="btnStartCamera" onclick="startCamera()">
+        📷 Kamerani yoqish
+      </button>
+      <button class="btn btn-primary btn-lg" id="btnScan" onclick="doScan()" style="display:none">
+        🔬 Skaner qilish
+      </button>
+      <button class="btn btn-secondary btn-lg" id="btnStopCamera" onclick="stopCamera()" style="display:none">
+        ⏹ To'xtatish
+      </button>
+    </div>
+
+    <!-- Scan status text -->
+    <div id="scanStatusMsg" style="margin-top:20px;color:var(--text-secondary);font-size:0.9rem;min-height:24px;text-align:center"></div>
+  </div>
+
+  <!-- Result Card (shown after scan) -->
+  <div id="result-section">
+    <div class="glass-card result-card" id="resultCard">
+      <div class="result-avatar" id="resultAvatar">👤</div>
+      <h2 class="result-name" id="resultName"></h2>
+      <p class="result-email" id="resultEmail"></p>
+      <div class="result-meta" id="resultMeta"></div>
+      <div class="confidence-bar">
+        <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:24px" id="confidenceText"></p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="resetScan()">🔄 Qayta skaner</button>
+        <button class="btn btn-primary" onclick="showSection('admin');loadAdminData()">📊 Admin</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ADMIN PANEL ═══════════════ -->
+<section id="admin" class="section" style="padding-top:80px">
+  <div class="admin-container">
+    <div class="section-header">
+      <h2 class="section-title">Admin <span class="gradient-text">Panel</span></h2>
+      <p class="section-subtitle">Foydalanuvchilar va skan ma'lumotlari</p>
+    </div>
+
+    <div class="admin-grid">
+      <!-- Sidebar stats -->
+      <div class="admin-sidebar">
+        <div class="glass-card admin-stat">
+          <div class="admin-stat-val" id="adminStatUsers">—</div>
+          <div class="admin-stat-label">Foydalanuvchilar</div>
+        </div>
+        <div class="glass-card admin-stat">
+          <div class="admin-stat-val" id="adminStatScans">—</div>
+          <div class="admin-stat-label">Jami skanlar</div>
+        </div>
+        <div class="glass-card admin-stat">
+          <div class="admin-stat-val" id="adminStatToday">—</div>
+          <div class="admin-stat-label">Bugun</div>
+        </div>
+        <div class="glass-card admin-stat">
+          <div class="admin-stat-val" id="adminStatWorld">—</div>
+          <div class="admin-stat-label">World.json</div>
+        </div>
+        <div class="glass-card" style="padding:16px">
+          <button class="btn btn-primary" style="width:100%;margin-bottom:10px" onclick="loadAdminData()">🔄 Yangilash</button>
+          <button class="btn btn-secondary" style="width:100%" onclick="showSection('scan')">📷 Skaner</button>
+        </div>
+      </div>
+
+      <!-- Users table -->
+      <div class="admin-main">
+        <div class="glass-card" style="overflow:hidden">
+          <div style="padding:20px 24px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-between">
+            <h3 style="font-size:1rem;font-weight:600">Foydalanuvchilar</h3>
+            <span class="result-badge" id="adminUserCount">0 ta</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th>Foydalanuvchi</th>
+                  <th>Email</th>
+                  <th>Telefon</th>
+                  <th>Skanlar</th>
+                  <th>Sana</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">Yuklanmoqda...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- World.json log -->
+        <div class="glass-card" style="padding:24px">
+          <h3 style="font-size:1rem;font-weight:600;margin-bottom:16px">📄 World.json — Oxirgi yozuvlar</h3>
+          <div class="world-log-list" id="adminWorldLog" style="max-height:280px">
+            <div style="color:var(--text-muted);text-align:center;padding:20px">Yuklanmoqda...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ REGISTRATION MODAL ═══════════════ -->
+<div class="modal-backdrop" id="regModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title">✨ Ro'yxatdan o'tish</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="face-preview" id="facePreviewWrapper">
+        <img id="facePreviewImg" src="" alt="Yuz"/>
+      </div>
+      <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-bottom:24px">
+        Yuzingiz muvaffaqiyatli skanerlandi. Ma'lumotlaringizni to'ldiring.
+      </p>
+      <form id="regForm" onsubmit="submitRegistration(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Ism *</label>
+            <input class="form-input" type="text" id="regFirstName" placeholder="Sardor" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Familiya *</label>
+            <input class="form-input" type="text" id="regLastName" placeholder="Rahimov" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefon</label>
+          <input class="form-input" type="tel" id="regPhone" placeholder="+998 90 123 45 67"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" id="regEmail" placeholder="sardor@email.com"/>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Bekor</button>
+          <button type="submit" class="btn btn-primary" id="regSubmitBtn">
+            <span>✅ Saqlash</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="footer">
+  <p>© 2024 <strong>FaceScan Pro</strong> — Biometrik identifikatsiya tizimi</p>
+  <p style="margin-top:6px">Node.js • PostgreSQL • face-api.js • Glassmorphism UI</p>
+</footer>
+
+<!-- Scripts -->
+<script src="js/faceScanner.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
