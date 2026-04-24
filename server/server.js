@@ -31,7 +31,8 @@ app.use(helmet({
 
 // CORS - allow frontend
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500'],
+  origin: true, // Reflect request origin
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));

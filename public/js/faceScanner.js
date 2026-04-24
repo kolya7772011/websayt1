@@ -64,6 +64,8 @@ const FaceScanner = (() => {
       audio: false
     });
     videoEl.srcObject = stream;
+    videoEl.setAttribute('playsinline', true); // Critical for iOS
+    await videoEl.play();
     await new Promise(res => { videoEl.onloadedmetadata = res });
     return stream;
   };
