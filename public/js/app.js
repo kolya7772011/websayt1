@@ -129,10 +129,21 @@ async function startCamera() {
 
   } catch (err) {
     console.error(err);
-    statusText.textContent = 'Kameraga ruxsat berilmagan!';
+    let errorMsg = 'Kameraga ruxsat berilmagan!';
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+      errorMsg = 'Kamera uchun HTTPS xavfsiz ulanish talab qilinadi!';
+    } else if (err.name === 'NotAllowedError') {
+      errorMsg = 'Kameraga ruxsat berilmadi. Brauzer sozlamalarini tekshiring.';
+    } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+      errorMsg = 'Kamera topilmadi.';
+    } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+      errorMsg = 'Kamera boshqa ilova tomonidan ishlatilmoqda.';
+    }
+
+    statusText.textContent = errorMsg;
     btnStart.disabled = false;
     btnStart.innerHTML = '📷 Kamerani yoqish';
-    showToast('Kameraga ruxsat bering (brauzer sozlamalar)', 'error');
+    showToast(errorMsg, 'error');
   }
 }
 

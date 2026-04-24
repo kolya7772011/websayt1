@@ -56,7 +56,11 @@ const FaceScanner = (() => {
    */
   const startCamera = async (videoEl) => {
     stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 640, height: 480, facingMode: 'user' },
+      video: { 
+        width: { ideal: 640 }, 
+        height: { ideal: 480 }, 
+        facingMode: 'user' 
+      },
       audio: false
     });
     videoEl.srcObject = stream;
