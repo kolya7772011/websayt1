@@ -7,12 +7,17 @@
 require('dotenv').config({ path: '../../.env' });
 const { Pool } = require('pg');
 
+const connectionString = process.env.DATABASE_URL;
+const isCloud = !!connectionString || !!process.env.RAILWAY_ENVIRONMENT;
+
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME || 'facescan_db',
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
+  connectionString: connectionString,
+  host: !connectionString ? (process.env.DB_HOST || 'localhost') : undefined,
+  port: !connectionString ? (process.env.DB_PORT || 5432) : undefined,
+  database: !connectionString ? (process.env.DB_NAME || 'facescan_db') : undefined,
+  user: !connectionString ? (process.env.DB_USER || 'postgres') : undefined,
+  password: !connectionString ? (process.env.DB_PASSWORD || 'password') : undefined,
+  ssl: isCloud ? { rejectUnauthorized: false } : false
 });
 
 const setupDatabase = async () => {

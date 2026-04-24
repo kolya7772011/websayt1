@@ -17,6 +17,7 @@ const userRoutes = require('./routes/userRoutes');
 
 // Services
 const WorldFileService = require('./services/worldFileService');
+const initDb = require('./db/init');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -103,8 +104,12 @@ app.get('/api/stats', async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('❌ /api/stats error:', err.message);
-    res.status(500).json({ success: false, message: 'Server xatosi' });
+    console.error('❌ /api/stats error:', err); // Log full error object
+    res.status(500).json({ 
+      success: false, 
+      message: 'Ma\'lumotlarni olishda xato',
+      error: err.message
+    });
   }
 });
 
@@ -139,6 +144,7 @@ app.use((err, req, res, next) => {
 
 /* ── Start server ─────────────────────────────────────────── */
 const startServer = async () => {
+  await initDb();
   await ensureDirs();
 
   app.listen(PORT, () => {
