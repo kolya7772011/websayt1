@@ -55,19 +55,38 @@ const FaceScanner = (() => {
    * @returns {MediaStream}
    */
   const startCamera = async (videoEl) => {
-    stream = await navigator.mediaDevices.getUserMedia({
+    if (stream) stopCamera();
+    
+    const constraints = {
       video: { 
-        width: { ideal: 640 }, 
-        height: { ideal: 480 }, 
+        width: { ideal: 1280 }, 
+        height: { ideal: 720 }, 
         facingMode: 'user' 
       },
       audio: false
-    });
-    videoEl.srcObject = stream;
-    videoEl.setAttribute('playsinline', true); // Critical for iOS
-    await videoEl.play();
-    await new Promise(res => { videoEl.onloadedmetadata = res });
-    return stream;
+    };
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
+      videoEl.srcObject = stream;
+      
+      // Essential for mobile/iOS
+      videoEl.setAttribute('playsinline', '');
+      videoEl.muted = true;
+      
+      return new Promise((resolve, reject) => {
+        videoEl.onloadedmetadata = () => {
+          videoEl.play()
+            .then(() => resolve(stream))
+            .catch(e => reject(e));
+        };
+        // Timeout if metadata doesn't load
+        setTimeout(() => reject(new Error('Kamera yuklanish vaqti tugadi')), 8000);
+      });
+    } catch (err) {
+      console.error('getUserMedia error:', err);
+      throw err;
+    }
   };
 
   /**

@@ -154,8 +154,9 @@ function stopCamera() {
 
   const video = document.getElementById('videoElement');
   video.srcObject = null;
-  const ctx = document.getElementById('canvas').getContext('2d');
-  ctx.clearRect(0, 0, 640, 480);
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   document.getElementById('btnStartCamera').style.display = 'flex';
   document.getElementById('btnStartCamera').disabled = false;

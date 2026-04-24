@@ -217,8 +217,8 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1
   border:2px solid var(--glass-border);
   background:#000;aspect-ratio:4/3;
 }
-#videoElement{width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1)}
-#canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1)}
+#videoElement{width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1);position:relative;z-index:1}
+#canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);z-index:2;pointer-events:none}
 
 /* Scan overlay */
 .scan-overlay{
